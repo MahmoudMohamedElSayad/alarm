@@ -20,8 +20,8 @@ class _AlarmNotificationScreenState extends State<AlarmNotificationScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text("Alram is ringing......."),
-          Text(widget.alarmSettings.notificationTitle),
-          Text(widget.alarmSettings.notificationBody),
+          Text(widget.alarmSettings.notificationSettings.title),
+          Text(widget.alarmSettings.notificationSettings.body),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

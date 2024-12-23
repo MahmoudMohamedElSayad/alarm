@@ -58,12 +58,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void loadAlarms() {
-    setState(() {
-      alarms = Alarm.getAlarms();
+    setState(() async {
+      // Future<List<AlarmSettings>> futureAlarmSettings = fetchAlarmSettings();
+      alarms = await fetchAlarms();;
       alarms.sort((a, b) => a.dateTime.isBefore(b.dateTime) ? 0 : 1);
     });
   }
-
+  Future<List<AlarmSettings>> fetchAlarms() async {
+    var alarmDateTime = DateTime.now().add(const Duration(seconds: 30));
+    // Simulate fetching data
+    return [ AlarmSettings(
+      id: 42,
+      dateTime: alarmDateTime,
+      assetAudioPath: 'assets/blank.mp3',
+      loopAudio: true,
+      vibrate: true,
+      volume: 0.8,
+      fadeDuration: 3.0,
+      notificationSettings:NotificationSettings(body: "",title: "") ,
+    )];
+  }
   Future<void> checkAndroidNotificationPermission() async {
     final status = await Permission.notification.status;
     if (status.isDenied) {
@@ -128,9 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
             vibrate: true,
             volume: 0.8,
             fadeDuration: 3.0,
-            notificationTitle: 'This is the title',
-            notificationBody: 'This is the body',
-            enableNotificationOnKill: Platform.isIOS,
+        notificationSettings:NotificationSettings(body: "",title: "") ,
           );
 
           await Alarm.set(alarmSettings: alarmSettings);
